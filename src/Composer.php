@@ -10,13 +10,14 @@ class Composer extends BaseComposer
      * Install a composer package.
      *
      * @param $package
-     * @param callable $callback
+     * @param  callable  $callback
+     * @return bool
      */
     public function install($package, callable $callback)
     {
-        $process = $this->getProcess();
-
-        $process->setCommandLine(trim($this->findComposer().' require '.$package));
+        $process = $this->getProcess(
+            array_merge($this->findComposer(), ['require', $package])
+        );
 
         $process->run($callback);
 
